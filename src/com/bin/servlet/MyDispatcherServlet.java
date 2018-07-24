@@ -3,12 +3,15 @@ package com.bin.servlet;
 import org.springframework.web.servlet.DispatcherServlet;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.net.URLStreamHandler;
 import java.util.Arrays;
+import java.util.StringTokenizer;
 
 public class MyDispatcherServlet extends DispatcherServlet {
     @Override
@@ -29,7 +32,7 @@ public class MyDispatcherServlet extends DispatcherServlet {
         String uri = "servlet/TestServlet";
         String servletName = uri.substring(uri.lastIndexOf("/") + 1);
         URLClassLoader loader = null;
-        System.out.println("system.properties:" + System.getProperties());
+        System.out.println("扩展目录:" + getExtDirs().toString());
         try {
             // create a URLClassLoader
             URL[] urls = new URL[3];
@@ -48,6 +51,7 @@ public class MyDispatcherServlet extends DispatcherServlet {
             urls[2] = new URL(null, j2eeRepo, streamHandler);
             //loader = new URLClassLoader(urls);
             loader = (URLClassLoader) Thread.currentThread().getContextClassLoader();
+            System.out.println(Thread.currentThread().getContextClassLoader().toString());
             System.out.println("URLS:" + Arrays.asList(((URLClassLoader) (Thread.currentThread().getContextClassLoader())).getURLs()));
             System.out.println("new URLS:" + Arrays.asList(loader.getURLs()));
         } catch (IOException e) {
@@ -63,5 +67,29 @@ public class MyDispatcherServlet extends DispatcherServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private static File[] getExtDirs() {
+        //加载<JAVA_HOME>/lib/ext目录中的类库
+        String s = System.getProperty("java.ext.dirs");
+        File[] dirs;
+        if (s != null) {
+            StringTokenizer st =
+                    new StringTokenizer(s, File.pathSeparator);
+            int count = st.countTokens();
+            dirs = new File[count];
+            for (int i = 0; i < count; i++) {
+                dirs[i] = new File(st.nextToken());
+            }
+        } else {
+            dirs = new File[0];
+        }
+        return dirs;
+    }
+
+
+    @Override
+    protected void doService(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        System.out.println("线程上线文:" + Thread.currentThread().getContextClassLoader());
     }
 }

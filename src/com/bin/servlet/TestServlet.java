@@ -1,6 +1,8 @@
 package com.bin.servlet;
 
 import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class TestServlet implements Servlet {
@@ -23,6 +25,11 @@ public class TestServlet implements Servlet {
     @Override
     public void service(ServletRequest servletRequest, ServletResponse servletResponse) throws ServletException, IOException {
         System.out.println("################servlet-service##################");
+        service((HttpServletRequest) servletRequest, (HttpServletResponse) servletResponse);
+    }
+
+    public void service(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("##############service new##############");
     }
 
     @Override
