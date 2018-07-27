@@ -1,6 +1,6 @@
 package com.bin.servlet;
 
-import com.bin.jndi.bean.MyBean;
+import com.bin.bean.MyBean;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;

@@ -1,4 +1,4 @@
-package com.bin.jndi.bean;
+package com.bin.bean;
 
 public class MyBean {
     private String userName;
