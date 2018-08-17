@@ -23,7 +23,7 @@ public class TestServlet1 extends TestServlet {
         try {
             initCxt = new InitialContext();
             MyBean myBean = (MyBean) initCxt.lookup("java:comp/env/bean/MyBeanFactory");
-            System.out.println("test:" + myBean.getUserName());
+            System.out.println("netty:" + myBean.getUserName());
         } catch (Exception e) {
             e.printStackTrace();
         }
