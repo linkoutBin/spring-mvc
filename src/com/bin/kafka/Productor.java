@@ -1,5 +1,6 @@
 package com.bin.kafka;
 
+import com.bin.kafka.serializer.avro.User;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -36,14 +37,22 @@ public class Productor {
         props.put("key.serializer",
                 "org.apache.kafka.common.serialization.StringSerializer");
 
-        props.put("value.serializer",
-                "org.apache.kafka.common.serialization.StringSerializer");
+        //props.put("value.serializer","org.apache.kafka.common.serialization.StringSerializer");
+        //props.put("value.serializer", "com.bin.kafka.serializer.common.MessageSerializer");
+        props.put("value.serializer", "com.bin.kafka.serializer.avro.AvroSerializer");
 
-        Producer<String, String> producer = new KafkaProducer<>(props);
 
-        for (int i = 300; i < 320; i++)
-            producer.send(new ProducerRecord<>(topicName,
-                    Integer.toString(i), Integer.toString(i)));
+        Producer<String, Object> producer = new KafkaProducer<>(props);
+
+        for (int i = 300; i < 320; i++) {
+            User user = new User();
+            user.setAge(12);
+            user.setName("user:" + i);
+            user.setPhone(Integer.toString(i));
+            ProducerRecord<String, Object> record = new ProducerRecord(topicName,
+                    Integer.toString(i), user);
+            producer.send(record);
+        }
         System.out.println("Message sent successfully");
         producer.close();
     }

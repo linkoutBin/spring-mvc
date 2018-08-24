@@ -23,8 +23,6 @@ public class redisClient {
 
         //
         //copyonwriteTest();
-
-        //
     }
 
     private static void copyonwriteTest() {
