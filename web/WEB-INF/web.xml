@@ -20,12 +20,24 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>/WEB-INF/applicationContext.xml</param-value>
     </context-param>
+    <!-- log4j 配置 -->
+    <!--<context-param>
+        <param-name>log4jConfigLocation</param-name>
+        <param-value>/WEB-INF/log4j.properties</param-value>
+    </context-param>
+    <context-param>
+        <param-name>log4jRefreshInterval</param-name>
+        <param-value>6000</param-value>
+    </context-param>
+    <listener>
+        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+    </listener>-->
     <!-- 初始化容器的上下文 监听器执行到生命周期的末端 -->
     <listener>
-        <listener-class>com.bin.listener.TestListener</listener-class>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
     <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+        <listener-class>com.bin.listener.TestListener</listener-class>
     </listener>
     <!-- 过滤器功能：在对应的servlet的service方法执行前，先执行doFilter方法 -->
     <filter>

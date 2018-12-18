@@ -10,6 +10,11 @@ import javax.sql.DataSource;
 import java.sql.*;
 
 public class TestServlet1 extends TestServlet {
+
+    static {
+        System.out.println("excute static code block");
+    }
+
     @Override
     public void service(HttpServletRequest request, HttpServletResponse response) {
         //commonJDBC();
