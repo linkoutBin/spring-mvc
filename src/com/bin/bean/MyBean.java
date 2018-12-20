@@ -10,4 +10,8 @@ public class MyBean {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
+    public MyBean(String userName) {
+        this.userName = userName;
+    }
 }
